@@ -7,7 +7,7 @@ public class Cube : MonoBehaviour
 {
     public MeshRenderer Renderer;
 
-    Slider positionSlider, rotationSlider, scaleSlider, redSlider, greenSlider, blueSlider, alphaSlider;
+    Slider positionSlider, rotationSlider, scaleSlider, redSlider, greenSlider, blueSlider, alphaSlider, XSlider, YSlider, ZSlider;
     float moveSpeed = 10f;
     private Vector3 targetPosition, targetRotation, targetScale;
     Material material;
@@ -24,6 +24,9 @@ public class Cube : MonoBehaviour
         rotationSlider = GameObject.Find("RotationSpeed").GetComponentInChildren<Slider>();
         scaleSlider = GameObject.Find("Scale").GetComponentInChildren<Slider>();
 
+        XSlider = GameObject.Find("X Axis").GetComponentInChildren<Slider>();
+        YSlider = GameObject.Find("Y Axis").GetComponentInChildren<Slider>();
+        ZSlider = GameObject.Find("Z Axis").GetComponentInChildren<Slider>();
 
         redSlider = GameObject.Find("Red").GetComponentInChildren<Slider>();
         greenSlider = GameObject.Find("Green").GetComponentInChildren<Slider>();
@@ -35,11 +38,13 @@ public class Cube : MonoBehaviour
         blueSlider.value = material.color.b;
         alphaSlider.value = material.color.a;
 
+        XSlider.value = 1f;
+
     }
 
     void Update()
     {
-        targetRotation = Vector3.right;
+        targetRotation = new Vector3(XSlider.value, YSlider.value, ZSlider.value);
 
         // rotation speed
         transform.Rotate(targetRotation * rotationSlider.value * Time.deltaTime);
@@ -50,7 +55,6 @@ public class Cube : MonoBehaviour
         // change color and opacity
         material.color = new Color(redSlider.value, greenSlider.value, blueSlider.value, alphaSlider.value);
 
-        Debug.Log(material.color);
     }
 
     private void FixedUpdate()
